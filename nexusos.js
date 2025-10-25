@@ -1,7 +1,24 @@
 // NexusOS Web Edition
 // Created by genius 13-year-old developer!
 
-// Система языков (БЕЗ использования currentLang в инициализации)
+// Сначала объявляем ВСЕ переменные
+let currentLang = 'en';
+let currentDir = "C:\\";
+let currentColor = "#00ff00";
+let isBsodActive = false;
+
+// Потом уже остальной код
+const COLOR_MAP = {
+    'RED': '#ff0000',
+    'GREEN': '#00ff00', 
+    'BLUE': '#0000ff',
+    'CYAN': '#00ffff',
+    'YELLOW': '#ffff00',
+    'MAGENTA': '#ff00ff',
+    'WHITE': '#ffffff'
+};
+
+// Система языков (теперь currentLang уже объявлен)
 const LANGUAGES = {
     'ru': {
         'welcome': "Добро пожаловать в NexusOS Web Edition!",
@@ -26,11 +43,11 @@ EXIT    - выход`,
 🎯 Полная переработка Python-версии для веба
 💻 Работает в любом современном браузере`,
 
-        'ver_content': function() { return `NexusOS Web Edition v1.0
+        'ver_content': `NexusOS Web Edition v1.0
 📅 Сборка: ${new Date().toLocaleDateString()}
 🌐 Платформа: Web Browser
 💾 Память: ${navigator.deviceMemory || 'N/A'} GB
-🔧 Язык: РУССКИЙ`; },
+🔧 Язык: РУССКИЙ`,
 
         'unknown_cmd': "❌ Неизвестная команда: ",
         'exit_msg': "👋 Спасибо за использование NexusOS!",
@@ -77,11 +94,11 @@ EXIT    - exit`,
 🎯 Complete rewrite from Python to Web
 💻 Works in any modern browser`,
 
-        'ver_content': function() { return `NexusOS Web Edition v1.0
+        'ver_content': `NexusOS Web Edition v1.0
 📅 Build: ${new Date().toLocaleDateString()}
 🌐 Platform: Web Browser
 💾 Memory: ${navigator.deviceMemory || 'N/A'} GB
-🔧 Language: ENGLISH`; },
+🔧 Language: ENGLISH`,
 
         'unknown_cmd': "❌ Unknown command: ",
         'exit_msg': "👋 Thank you for using NexusOS!",
@@ -106,27 +123,9 @@ README.TXT      File       2,048 bytes 01-01-23`,
     }
 };
 
-// Глобальные переменные системы
-let currentLang = 'en';
-let currentDir = "C:\\";
-let currentColor = "#00ff00";
-let isBsodActive = false;
-
-// Цветовая карта
-const COLOR_MAP = {
-    'RED': '#ff0000',
-    'GREEN': '#00ff00', 
-    'BLUE': '#0000ff',
-    'CYAN': '#00ffff',
-    'YELLOW': '#ffff00',
-    'MAGENTA': '#ff00ff',
-    'WHITE': '#ffffff'
-};
-
 // Функция для получения текста с учетом языка
 function getText(key) {
-    const text = LANGUAGES[currentLang][key];
-    return typeof text === 'function' ? text() : text;
+    return LANGUAGES[currentLang][key];
 }
 
 // Выбор языка
