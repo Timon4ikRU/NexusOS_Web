@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusOS Web Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Экран выбора языка -->
+    <div id="lang-screen">
+        <div class="lang-logo">NexusOS</div>
+        <div class="lang-text">Welcome to NexusOS!</div>
+        <div class="lang-text">Выберите язык / Choose language:</div>
+        <div class="lang-buttons">
+            <button onclick="selectLanguage('ru')">Русский</button>
+            <button onclick="selectLanguage('en')">English</button>
+        </div>
+    </div>
+
+    <!-- Экран загрузки -->
+    <div id="boot-screen" class="hidden">
+        <div class="boot-logo">NexusOS</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="boot-text" id="boot-text">Загрузка системы...</div>
+    </div>
+
+    <!-- Основной терминал -->
+    <div id="terminal" class="hidden">
+        <div id="output"></div>
+        <div class="input-line">
+            <span class="prompt" id="prompt">C:\></span>
+            <input type="text" id="command-input" autofocus>
+        </div>
+    </div>
+
+    <script src="nexusos.js"></script>
+</body>
+</html>
