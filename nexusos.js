@@ -292,4 +292,37 @@ document.getElementById('terminal').addEventListener('click', function() {
     document.getElementById('command-input').focus();
 });
 
+// Показать синий экран (добавь эту функцию)
+function showBsod() {
+    isBsodActive = true;
+    var bsod = document.getElementById('bsod-screen');
+    if (!bsod) {
+        console.error("BSOD screen element not found!");
+        return;
+    }
+    
+    bsod.style.display = 'flex';
+    bsod.innerHTML = '<div class="bsod-content">' +
+        '<div class="bsod-title">' + getText('bsod_title') + '</div>' +
+        '<div class="bsod-text">' + getText('bsod_message') + '</div>' +
+        '<div class="bsod-code">ОШИБКА: 0x' + Math.random().toString(16).substr(2,8).toUpperCase() + '</div>' +
+        '<div class="bsod-text">' + getText('bsod_restart') + '</div>' +
+        '</div>';
+    
+    function handler(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            bsod.style.display = 'none';
+            isBsodActive = false;
+            document.removeEventListener('keypress', handler);
+            document.getElementById('terminal').classList.add('hidden');
+            document.getElementById('lang-screen').classList.remove('hidden');
+            document.documentElement.style.setProperty('--text-color', '#00ff00');
+            currentColor = '#00ff00';
+        }
+    }
+    
+    document.addEventListener('keypress', handler);
+}
+
 console.log("NexusOS Web Edition loaded!");
