@@ -1,14 +1,14 @@
-// NexusOS Web Edition
+// NexusOS Web Edition - FIXED VERSION
 // Created by genius 13-year-old developer!
 
-// Сначала объявляем ВСЕ переменные
-let currentLang = 'en';
-let currentDir = "C:\\";
-let currentColor = "#00ff00";
-let isBsodActive = false;
+// ВРЕМЕННО убираем все let/const и используем старые var
+var currentLang = 'en';
+var currentDir = "C:\\";
+var currentColor = "#00ff00";
+var isBsodActive = false;
 
-// Потом уже остальной код
-const COLOR_MAP = {
+// Цветовая карта
+var COLOR_MAP = {
     'RED': '#ff0000',
     'GREEN': '#00ff00', 
     'BLUE': '#0000ff',
@@ -18,56 +18,30 @@ const COLOR_MAP = {
     'WHITE': '#ffffff'
 };
 
-// Система языков (теперь currentLang уже объявлен)
-const LANGUAGES = {
+// Система языков (УПРОЩЕННАЯ - без динамических данных)
+var LANGUAGES = {
     'ru': {
         'welcome': "Добро пожаловать в NexusOS Web Edition!",
         'boot': "Загрузка системы...",
         'prompt': "C:\\>",
         'help_title': "📋 Справка по командам",
-        'help_content': `Доступные команды:
-HELP    - эта справка
-CLS     - очистить экран
-ABOUT   - о системе
-VER     - версия системы
-DIR     - список файлов
-COLOR   - изменить цвет
-TIME    - текущее время
-DATE    - текущая дата
-CALC    - калькулятор
-BSOD    - синий экран (осторожно!)
-EXIT    - выход`,
-
-        'about_content': `🤖 NexusOS Web Edition v1.0
-⚡ Создано гениальным 13-летним разработчиком!
-🎯 Полная переработка Python-версии для веба
-💻 Работает в любом современном браузере`,
-
-        'ver_content': `NexusOS Web Edition v1.0
-📅 Сборка: ${new Date().toLocaleDateString()}
-🌐 Платформа: Web Browser
-💾 Память: ${navigator.deviceMemory || 'N/A'} GB
-🔧 Язык: РУССКИЙ`,
-
-        'unknown_cmd': "❌ Неизвестная команда: ",
-        'exit_msg': "👋 Спасибо за использование NexusOS!",
-        'time_label': "🕒 Текущее время: ",
-        'date_label': "📅 Текущая дата: ",
-        'calc_usage': "🧮 Использование: CALC <число> <операция> <число>",
-        'calc_result': "✅ Результат: ",
-        'calc_error': "❌ Ошибка вычисления",
-        'dir_title': "📁 Содержимое каталога C:\\",
-        'dir_content': `[SYSTEM]    <DIR>          01-01-23    Системные файлы
-[GAMES]     <DIR>          01-01-23    Игры        
-[USERS]     <DIR>          01-01-23    Пользователи
-AUTOEXEC.BAT    Файл        1,024 байт  01-01-23
-CONFIG.SYS      Файл          512 байт  01-01-23
-README.TXT      Файл        2,048 байт  01-01-23`,
-        'dir_footer': "📊 Файлов: 3, Каталогов: 3",
-        'color_usage': "🎨 Использование: COLOR <цвет>\nДоступные цвета: RED, GREEN, BLUE, CYAN, YELLOW, MAGENTA, WHITE",
-        'color_changed': "✅ Цвет изменен на: ",
-        'bsod_title': "💀 ПРОИЗОШЛА КРИТИЧЕСКАЯ ОШИБКА",
-        'bsod_message': "NexusOS обнаружила проблему и будет перезагружена",
+        'help_content': "Доступные команды:\nHELP - справка\nCLS - очистить экран\nABOUT - о системе\nVER - версия\nDIR - файлы\nCOLOR - цвет\nTIME - время\nDATE - дата\nCALC - калькулятор\nBSOD - синий экран\nEXIT - выход",
+        'about_content': "NexusOS Web Edition v1.0\nСоздано гениальным 13-летним разработчиком!",
+        'ver_content': "NexusOS Web Edition v1.0\nВеб-версия твоей крутой ОС!",
+        'unknown_cmd': "Неизвестная команда: ",
+        'exit_msg': "Спасибо за использование NexusOS!",
+        'time_label': "Текущее время: ",
+        'date_label': "Текущая дата: ",
+        'calc_usage': "Использование: CALC 2 + 3",
+        'calc_result': "Результат: ",
+        'calc_error': "Ошибка вычисления",
+        'dir_title': "Содержимое каталога C:\\",
+        'dir_content': "[SYSTEM]    <DIR>\n[GAMES]     <DIR>\nREADME.TXT  Файл",
+        'dir_footer': "Файлов: 1, Каталогов: 2",
+        'color_usage': "Использование: COLOR RED",
+        'color_changed': "Цвет изменен на: ",
+        'bsod_title': "КРИТИЧЕСКАЯ ОШИБКА",
+        'bsod_message': "Система будет перезагружена",
         'bsod_restart': "Нажмите Enter для перезагрузки..."
     },
     
@@ -75,55 +49,29 @@ README.TXT      Файл        2,048 байт  01-01-23`,
         'welcome': "Welcome to NexusOS Web Edition!",
         'boot': "Loading system...", 
         'prompt': "C:\\>",
-        'help_title': "📋 Command Help",
-        'help_content': `Available commands:
-HELP    - this help
-CLS     - clear screen
-ABOUT   - about system  
-VER     - version info
-DIR     - list files
-COLOR   - change color
-TIME    - current time
-DATE    - current date
-CALC    - calculator
-BSOD    - blue screen (careful!)
-EXIT    - exit`,
-
-        'about_content': `🤖 NexusOS Web Edition v1.0
-⚡ Created by genius 13-year-old developer!
-🎯 Complete rewrite from Python to Web
-💻 Works in any modern browser`,
-
-        'ver_content': `NexusOS Web Edition v1.0
-📅 Build: ${new Date().toLocaleDateString()}
-🌐 Platform: Web Browser
-💾 Memory: ${navigator.deviceMemory || 'N/A'} GB
-🔧 Language: ENGLISH`,
-
-        'unknown_cmd': "❌ Unknown command: ",
-        'exit_msg': "👋 Thank you for using NexusOS!",
-        'time_label': "🕒 Current time: ",
-        'date_label': "📅 Current date: ",
-        'calc_usage': "🧮 Usage: CALC <number> <operation> <number>",
-        'calc_result': "✅ Result: ",
-        'calc_error': "❌ Calculation error",
-        'dir_title': "📁 Directory of C:\\",
-        'dir_content': `[SYSTEM]    <DIR>          01-01-23    System files
-[GAMES]     <DIR>          01-01-23    Games        
-[USERS]     <DIR>          01-01-23    Users
-AUTOEXEC.BAT    File       1,024 bytes 01-01-23
-CONFIG.SYS      File         512 bytes 01-01-23
-README.TXT      File       2,048 bytes 01-01-23`,
-        'dir_footer': "📊 Files: 3, Directories: 3",
-        'color_usage': "🎨 Usage: COLOR <color>\nAvailable colors: RED, GREEN, BLUE, CYAN, YELLOW, MAGENTA, WHITE",
-        'color_changed': "✅ Color changed to: ",
-        'bsod_title': "💀 A CRITICAL ERROR OCCURRED",
-        'bsod_message': "NexusOS has encountered a problem and will be restarted",
+        'help_title': "Command Help",
+        'help_content': "Available commands:\nHELP - help\nCLS - clear screen\nABOUT - about\nVER - version\nDIR - files\nCOLOR - color\nTIME - time\nDATE - date\nCALC - calculator\nBSOD - blue screen\nEXIT - exit",
+        'about_content': "NexusOS Web Edition v1.0\nCreated by genius 13-year-old developer!",
+        'ver_content': "NexusOS Web Edition v1.0\nWeb version of your awesome OS!",
+        'unknown_cmd': "Unknown command: ",
+        'exit_msg': "Thank you for using NexusOS!",
+        'time_label': "Current time: ",
+        'date_label': "Current date: ",
+        'calc_usage': "Usage: CALC 2 + 3",
+        'calc_result': "Result: ",
+        'calc_error': "Calculation error",
+        'dir_title': "Directory of C:\\",
+        'dir_content': "[SYSTEM]    <DIR>\n[GAMES]     <DIR>\nREADME.TXT  File",
+        'dir_footer': "Files: 1, Directories: 2",
+        'color_usage': "Usage: COLOR RED",
+        'color_changed': "Color changed to: ",
+        'bsod_title': "CRITICAL ERROR",
+        'bsod_message': "System will be restarted",
         'bsod_restart': "Press Enter to restart..."
     }
 };
 
-// Функция для получения текста с учетом языка
+// Функция для получения текста
 function getText(key) {
     return LANGUAGES[currentLang][key];
 }
@@ -138,12 +86,12 @@ function selectLanguage(lang) {
     startBootSequence();
 }
 
-// Загрузка системы с прогресс-баром
+// Загрузка системы
 function startBootSequence() {
-    const progressBar = document.querySelector('.progress');
-    let width = 0;
+    var progressBar = document.querySelector('.progress');
+    var width = 0;
     
-    const interval = setInterval(() => {
+    var interval = setInterval(function() {
         width += 2;
         progressBar.style.width = width + '%';
         
@@ -165,7 +113,7 @@ function showTerminal() {
 }
 
 // Системные команды
-const commands = {
+var commands = {
     'HELP': function(args) {
         addOutput(getText('help_title'), 'system');
         addOutput(getText('help_content'), 'info');
@@ -192,14 +140,14 @@ const commands = {
     },
     
     'TIME': function(args) {
-        const now = new Date();
-        const time = now.toLocaleTimeString();
+        var now = new Date();
+        var time = now.toLocaleTimeString();
         addOutput(getText('time_label') + time, 'success');
     },
     
     'DATE': function(args) {
-        const now = new Date();
-        const date = now.toLocaleDateString();
+        var now = new Date();
+        var date = now.toLocaleDateString();
         addOutput(getText('date_label') + date, 'success');
     },
     
@@ -210,14 +158,14 @@ const commands = {
         }
         
         try {
-            const parts = args.split(' ');
+            var parts = args.split(' ');
             if (parts.length !== 3) throw new Error();
             
-            const a = parseFloat(parts[0]);
-            const op = parts[1];
-            const b = parseFloat(parts[2]);
+            var a = parseFloat(parts[0]);
+            var op = parts[1];
+            var b = parseFloat(parts[2]);
             
-            let result;
+            var result;
             switch(op) {
                 case '+': result = a + b; break;
                 case '-': result = a - b; break;
@@ -239,7 +187,7 @@ const commands = {
             return;
         }
         
-        const color = args.toUpperCase();
+        var color = args.toUpperCase();
         if (COLOR_MAP[color]) {
             currentColor = COLOR_MAP[color];
             document.documentElement.style.setProperty('--text-color', currentColor);
@@ -256,10 +204,9 @@ const commands = {
     
     'EXIT': function(args) {
         addOutput(getText('exit_msg'), 'system');
-        setTimeout(() => {
+        setTimeout(function() {
             document.getElementById('terminal').classList.add('hidden');
             document.getElementById('lang-screen').classList.remove('hidden');
-            // Сброс цвета при выходе
             document.documentElement.style.setProperty('--text-color', '#00ff00');
             currentColor = '#00ff00';
         }, 2000);
@@ -269,19 +216,16 @@ const commands = {
 // Показать синий экран
 function showBsod() {
     isBsodActive = true;
-    const bsod = document.getElementById('bsod-screen');
+    var bsod = document.getElementById('bsod-screen');
     bsod.style.display = 'flex';
-    bsod.innerHTML = `
-        <div class="bsod-content">
-            <div class="bsod-title">${getText('bsod_title')}</div>
-            <div class="bsod-text">${getText('bsod_message')}</div>
-            <div class="bsod-code">🚨 ОШИБКА: 0x${Math.random().toString(16).substr(2,8).toUpperCase()}</div>
-            <div class="bsod-text">${getText('bsod_restart')}</div>
-        </div>
-    `;
+    bsod.innerHTML = '<div class="bsod-content">' +
+        '<div class="bsod-title">' + getText('bsod_title') + '</div>' +
+        '<div class="bsod-text">' + getText('bsod_message') + '</div>' +
+        '<div class="bsod-code">ОШИБКА: 0x' + Math.random().toString(16).substr(2,8).toUpperCase() + '</div>' +
+        '<div class="bsod-text">' + getText('bsod_restart') + '</div>' +
+        '</div>';
     
-    // Перехватываем Enter для перезагрузки
-    const handler = function(e) {
+    function handler(e) {
         if (e.key === 'Enter') {
             e.preventDefault();
             bsod.style.display = 'none';
@@ -289,25 +233,23 @@ function showBsod() {
             document.removeEventListener('keypress', handler);
             document.getElementById('terminal').classList.add('hidden');
             document.getElementById('lang-screen').classList.remove('hidden');
-            // Сброс при перезагрузке
             document.documentElement.style.setProperty('--text-color', '#00ff00');
             currentColor = '#00ff00';
         }
-    };
+    }
     
     document.addEventListener('keypress', handler);
 }
 
-// Обработчик команд в терминале
+// Обработчик команд
 document.getElementById('command-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-        const input = this.value.trim();
-        const command = input.toUpperCase().split(' ')[0];
-        const args = input.substring(command.length).trim();
+        var input = this.value.trim();
+        var command = input.toUpperCase().split(' ')[0];
+        var args = input.substring(command.length).trim();
         
         this.value = '';
         
-        // Показываем введенную команду
         addOutput(currentDir + '> ' + input, 'input');
         
         if (commands[command]) {
@@ -321,12 +263,12 @@ document.getElementById('command-input').addEventListener('keypress', function(e
 });
 
 // Вспомогательные функции
-function addOutput(text, type = 'normal') {
+function addOutput(text, type) {
     if (isBsodActive) return;
     
-    const output = document.getElementById('output');
-    const line = document.createElement('div');
-    line.className = `output-line output-${type}`;
+    var output = document.getElementById('output');
+    var line = document.createElement('div');
+    line.className = 'output-line output-' + (type || 'normal');
     line.textContent = text;
     output.appendChild(line);
     output.scrollTop = output.scrollHeight;
@@ -336,21 +278,18 @@ function updatePrompt() {
     document.getElementById('prompt').textContent = currentDir + '>';
 }
 
-// CSS переменная для цвета текста
+// Инициализация
 document.documentElement.style.setProperty('--text-color', currentColor);
 
-// Добавляем BSOD экран в DOM если его нет
 if (!document.getElementById('bsod-screen')) {
-    const bsod = document.createElement('div');
+    var bsod = document.createElement('div');
     bsod.id = 'bsod-screen';
     bsod.className = 'hidden';
     document.body.appendChild(bsod);
 }
 
-// Автофокус на поле ввода при клике в любое место терминала
 document.getElementById('terminal').addEventListener('click', function() {
     document.getElementById('command-input').focus();
 });
 
-console.log("🚀 NexusOS Web Edition loaded!");
-console.log("👨‍💻 Created by amazing 13-year-old developer!");
+console.log("NexusOS Web Edition loaded!");
