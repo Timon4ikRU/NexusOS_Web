@@ -1,7 +1,7 @@
 // NexusOS Web Edition
 // Created by genius 13-year-old developer!
 
-// Система языков
+// Система языков (БЕЗ использования currentLang в инициализации)
 const LANGUAGES = {
     'ru': {
         'welcome': "Добро пожаловать в NexusOS Web Edition!",
@@ -26,11 +26,11 @@ EXIT    - выход`,
 🎯 Полная переработка Python-версии для веба
 💻 Работает в любом современном браузере`,
 
-        'ver_content': `NexusOS Web Edition v1.0
+        'ver_content': function() { return `NexusOS Web Edition v1.0
 📅 Сборка: ${new Date().toLocaleDateString()}
 🌐 Платформа: Web Browser
 💾 Память: ${navigator.deviceMemory || 'N/A'} GB
-🔧 Язык: ${currentLang.toUpperCase()}`,
+🔧 Язык: РУССКИЙ`; },
 
         'unknown_cmd': "❌ Неизвестная команда: ",
         'exit_msg': "👋 Спасибо за использование NexusOS!",
@@ -77,11 +77,11 @@ EXIT    - exit`,
 🎯 Complete rewrite from Python to Web
 💻 Works in any modern browser`,
 
-        'ver_content': `NexusOS Web Edition v1.0
+        'ver_content': function() { return `NexusOS Web Edition v1.0
 📅 Build: ${new Date().toLocaleDateString()}
 🌐 Platform: Web Browser
 💾 Memory: ${navigator.deviceMemory || 'N/A'} GB
-🔧 Language: ${currentLang.toUpperCase()}`,
+🔧 Language: ENGLISH`; },
 
         'unknown_cmd': "❌ Unknown command: ",
         'exit_msg': "👋 Thank you for using NexusOS!",
@@ -123,12 +123,18 @@ const COLOR_MAP = {
     'WHITE': '#ffffff'
 };
 
+// Функция для получения текста с учетом языка
+function getText(key) {
+    const text = LANGUAGES[currentLang][key];
+    return typeof text === 'function' ? text() : text;
+}
+
 // Выбор языка
 function selectLanguage(lang) {
     currentLang = lang;
     document.getElementById('lang-screen').classList.add('hidden');
     document.getElementById('boot-screen').classList.remove('hidden');
-    document.getElementById('boot-text').textContent = LANGUAGES[lang]['boot'];
+    document.getElementById('boot-text').textContent = getText('boot');
     
     startBootSequence();
 }
@@ -154,7 +160,7 @@ function showTerminal() {
     document.getElementById('boot-screen').classList.add('hidden');
     document.getElementById('terminal').classList.remove('hidden');
     
-    addOutput("🚀 " + LANGUAGES[currentLang]['welcome'], 'system');
+    addOutput("🚀 " + getText('welcome'), 'system');
     addOutput("💡 " + (currentLang === 'ru' ? "Введите HELP для списка команд" : "Type HELP for command list"), 'info');
     updatePrompt();
 }
@@ -162,8 +168,8 @@ function showTerminal() {
 // Системные команды
 const commands = {
     'HELP': function(args) {
-        addOutput(LANGUAGES[currentLang]['help_title'], 'system');
-        addOutput(LANGUAGES[currentLang]['help_content'], 'info');
+        addOutput(getText('help_title'), 'system');
+        addOutput(getText('help_content'), 'info');
     },
     
     'CLS': function(args) {
@@ -172,35 +178,35 @@ const commands = {
     
     'ABOUT': function(args) {
         addOutput("🤖 " + (currentLang === 'ru' ? "О системе NexusOS" : "About NexusOS"), 'system');
-        addOutput(LANGUAGES[currentLang]['about_content'], 'info');
+        addOutput(getText('about_content'), 'info');
     },
     
     'VER': function(args) {
         addOutput("🔧 " + (currentLang === 'ru' ? "Версия системы" : "System Version"), 'system');
-        addOutput(LANGUAGES[currentLang]['ver_content'], 'info');
+        addOutput(getText('ver_content'), 'info');
     },
     
     'DIR': function(args) {
-        addOutput(LANGUAGES[currentLang]['dir_title'], 'system');
-        addOutput(LANGUAGES[currentLang]['dir_content'], 'info');
-        addOutput(LANGUAGES[currentLang]['dir_footer'], 'success');
+        addOutput(getText('dir_title'), 'system');
+        addOutput(getText('dir_content'), 'info');
+        addOutput(getText('dir_footer'), 'success');
     },
     
     'TIME': function(args) {
         const now = new Date();
         const time = now.toLocaleTimeString();
-        addOutput(LANGUAGES[currentLang]['time_label'] + time, 'success');
+        addOutput(getText('time_label') + time, 'success');
     },
     
     'DATE': function(args) {
         const now = new Date();
         const date = now.toLocaleDateString();
-        addOutput(LANGUAGES[currentLang]['date_label'] + date, 'success');
+        addOutput(getText('date_label') + date, 'success');
     },
     
     'CALC': function(args) {
         if (!args) {
-            addOutput(LANGUAGES[currentLang]['calc_usage'], 'info');
+            addOutput(getText('calc_usage'), 'info');
             return;
         }
         
@@ -221,16 +227,16 @@ const commands = {
                 default: throw new Error();
             }
             
-            addOutput(LANGUAGES[currentLang]['calc_result'] + result, 'success');
+            addOutput(getText('calc_result') + result, 'success');
         } catch (e) {
-            addOutput(LANGUAGES[currentLang]['calc_error'], 'error');
-            addOutput(LANGUAGES[currentLang]['calc_usage'], 'info');
+            addOutput(getText('calc_error'), 'error');
+            addOutput(getText('calc_usage'), 'info');
         }
     },
     
     'COLOR': function(args) {
         if (!args) {
-            addOutput(LANGUAGES[currentLang]['color_usage'], 'info');
+            addOutput(getText('color_usage'), 'info');
             return;
         }
         
@@ -238,10 +244,10 @@ const commands = {
         if (COLOR_MAP[color]) {
             currentColor = COLOR_MAP[color];
             document.documentElement.style.setProperty('--text-color', currentColor);
-            addOutput(LANGUAGES[currentLang]['color_changed'] + color, 'success');
+            addOutput(getText('color_changed') + color, 'success');
         } else {
             addOutput("❌ " + (currentLang === 'ru' ? "Неизвестный цвет" : "Unknown color"), 'error');
-            addOutput(LANGUAGES[currentLang]['color_usage'], 'info');
+            addOutput(getText('color_usage'), 'info');
         }
     },
     
@@ -250,7 +256,7 @@ const commands = {
     },
     
     'EXIT': function(args) {
-        addOutput(LANGUAGES[currentLang]['exit_msg'], 'system');
+        addOutput(getText('exit_msg'), 'system');
         setTimeout(() => {
             document.getElementById('terminal').classList.add('hidden');
             document.getElementById('lang-screen').classList.remove('hidden');
@@ -268,10 +274,10 @@ function showBsod() {
     bsod.style.display = 'flex';
     bsod.innerHTML = `
         <div class="bsod-content">
-            <div class="bsod-title">${LANGUAGES[currentLang]['bsod_title']}</div>
-            <div class="bsod-text">${LANGUAGES[currentLang]['bsod_message']}</div>
+            <div class="bsod-title">${getText('bsod_title')}</div>
+            <div class="bsod-text">${getText('bsod_message')}</div>
             <div class="bsod-code">🚨 ОШИБКА: 0x${Math.random().toString(16).substr(2,8).toUpperCase()}</div>
-            <div class="bsod-text">${LANGUAGES[currentLang]['bsod_restart']}</div>
+            <div class="bsod-text">${getText('bsod_restart')}</div>
         </div>
     `;
     
@@ -308,7 +314,7 @@ document.getElementById('command-input').addEventListener('keypress', function(e
         if (commands[command]) {
             commands[command](args);
         } else if (command) {
-            addOutput(LANGUAGES[currentLang]['unknown_cmd'] + command, 'error');
+            addOutput(getText('unknown_cmd') + command, 'error');
         }
         
         updatePrompt();
